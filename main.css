@@ -143,19 +143,21 @@ p {
   font-size: 18px;
 }
 
-.side-image{
+.side-image {
   position: fixed;
   left: 20px;
-  top: 650px;
+  bottom: 20px; 
   width: 120px;
   height: auto;
+  max-height: 25vh;
+  object-fit: contain;
   cursor: url('./images/openHand.png') 3 3, pointer;
   mix-blend-mode: multiply;
 }
-.side-image-text{
+.side-image-text {
   position: fixed;
   left: 35px;
-  top: 600px;
+  bottom: 160px;
   width: 120px;
   height: auto;
   cursor: url('./images/openHand.png') 3 3, pointer;
