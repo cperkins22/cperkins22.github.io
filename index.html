@@ -12,18 +12,90 @@
    <header class="navigationBar">
       <nav>
          <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="">About</a></li>
-            <li><a href="">Contact</a></li>
+            <li><a href="#h"><span data-value="HOME">HOME</span></a></li>
+            <li><a href="#a"><span data-value="ABOUT">ABOUT</span></a></li>
+            <li><a href="#p"><span data-value="PROJECTS">PROJECTS</span></a></li>            
+            <li><a href="#s"><span data-value="SKILLS">SKILLS</span></a></li>
+            <li><a href="#e"><span data-value="EDUCATION">EDUCATION</span></a></li>
+
          </ul>
       </nav>
    </header>
 
    <main class="main">
+
+      <img src="./images/lightswitchON.png" id="lightswitch" class="side-image" alt="Lightswitch">
+      <img src="./images/click me gif.gif" class="side-image-text">
+
       <h1> Cam Perkins </h1>
-      <p>Cam Perkins is a student at Bridgewater State University.</p>
+      <p><strong>Computer Science student</strong></p>
+      <p class="subtitle">Bridgewater State University</p>
+      <footer class="bottom-text">
+  site under construction
+</footer>
+
+
    </main>
    
+   <!-- Script for really cool Text Jumble Animation on button Hover-->
+   <script>
+      //query selector finds all <a> tag inside my navigation bar (it's actually finding the span tag inside each <a>, which is there for the underline animation),
+      //the forEach loops through each one and sets up each animation   
+    document.querySelectorAll('.navigationBar nav ul li a span').forEach(span => {
+      let interval = null;
+      //reads the data-value stored for each button and
+      const originalText = span.dataset.value;
+      //listen for mouse hover
+      span.addEventListener('mouseenter', () => {
+        let frameCount = 0;
+        const totalJumbles = 3;  //number of frames for animation
+        const speed = 80;       //animation speed (ms)
+
+        clearInterval(interval); //stops any other animation timer that may be running if buttons were switched between quickly
+
+        interval = setInterval(() => {
+          if (frameCount < totalJumbles) {
+            // Create a random anagram 
+            const anagram = originalText.split('').sort(() => Math.random() - 0.5).join('');
+
+            span.innerText = anagram;
+            frameCount++;
+          } else {
+            // Restore original text
+            span.innerText = originalText;
+            clearInterval(interval);
+          }
+        }, speed);
+      });
+    });
+  </script>
+
+  <!-- Script for the lightswitch-->
+  <script>
+      const myImage = document.getElementById('lightswitch');
+
+      // Define paths to your two images
+      const on = './images/lightswitchON.png';
+      const off = './images/lightswitchOFF.png';
+
+
+      //I know I should've done this with a css class for dark and light mode but I will later lol
+      const lightMode = 'radial-gradient(circle at 40% 50%, #ffffff, rgb(255, 255, 255))';
+      const darkMode = 'radial-gradient(circle at 40% 50%, #999696, #1a1a1a';
+
+      myImage.addEventListener('click', () => {
+         // Check current source and toggle to the other image
+         if (myImage.src.includes('lightswitchON.png')) {
+            myImage.src = off;
+            document.body.style.backgroundImage = darkMode;
+         } else {
+            myImage.src = on;
+            document.body.style.backgroundImage = lightMode;
+         }
+      });
+   </script>
+
+
  </body>
 
  </html> 

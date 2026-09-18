@@ -1,12 +1,32 @@
 
+/*IMPORTED FONTS*/
+
+@font-face {
+  font-family: 'square';
+  src: url(./fonts/square-deal.ttf);
+  font-weight: normal;
+}
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'square', sans-serif;
     background-image: 
-		radial-gradient(circle at 40% 50%, #ffffffef, rgba(220, 239, 185, 0.779));
-	background-repeat: no-repeat;
+		radial-gradient(circle at 40% 50%, #ffffff, rgb(255, 255, 255));
+	  background-repeat: no-repeat;
     min-height: 100vh;
     margin: 0;
 }
+
+/*Dynamic Cursor Support*/
+html, body {
+  cursor: url('./images/openHand.png') 3 3, auto;
+}
+html:active, body:active {
+  cursor: url('./images/closedHand.png') 3 3, grabbing;
+}
+a, button, .navigationBar nav ul li a span {
+  cursor: url('./images/openHand.png') 3 3, pointer;
+}
+
 
 /*background texture*/
 body::before {
@@ -18,11 +38,10 @@ body::before {
     height: calc(100% + 100px);
     background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
     background-repeat: repeat;
-    opacity: 0.3; /* 0.05 to 0.1 gives a subtle grain */
+    opacity: 0.18; /* 0.05 to 0.1 gives a subtle grain */
     pointer-events: none;
-    z-index: 0;
-	animation: grainShift 3s steps(2) infinite;
-	
+    z-index: -1;
+	  animation: grainShift 3s steps(2) infinite;
 }
 
 .navigationBar {
@@ -30,10 +49,22 @@ body::before {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #fdf5bb; 
-  z-index: 10;                
+
+  margin-top: -4px;  /* Bleeds the top border off-screen */
+  padding-top: 4px;
+
+  background-image: url("./images/navigationbar.png");
+  background-repeat: no-repeat;
+
+  background-size: 100% 100%;
+  background-position: top center;
+
+  height: 100px;
+
+  z-index: 10;
   box-sizing: border-box;
-  filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.15));
+  animation: jump 1.5s steps(1) infinite;
 }
 
 .navigationBar nav ul {
@@ -44,56 +75,120 @@ body::before {
              /* Eliminates inline-block whitespace gaps */
 }
 
-.navigationBar nav ul li a {
-  display: block;
-  padding: 14px 20px;
-  color: #171616;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  
-}
-
 /*
 You will also need to add styles for image tag to insert hammer
 margin-top
 */
-nav ul li {
-	/* displays left to right on one line */
-	display: inline-block;
-	/* removes the dot from the list */
-	list-style-type: none;
+.navigationBar nav ul li a {
+  display: inline-block;
+  padding: 14px 40px;
+  color: #222222;
+  text-decoration: none;
+  font-weight: normal;
+  
+  pointer-events: none; /*I only want my hyperlinks to be clickable directly on the text, not the whole <a> box*/
 }
 
-.navigationBar nav ul li a:hover {
-  background-color: rgb(40, 127, 233);
-  color: #ffffff;
+/* Make the span relative so ::after attaches to the text only */
+.navigationBar nav ul li a span {
+  position: relative;
+  display: inline-block;
   
+  pointer-events: auto; /*I only want my hyperlinks to be clickable directly on the text, not the whole <a> box*/
+  user-select: none;
+}
+
+.navigationBar nav ul li a span::after {
+  content: '';
+  position: absolute;
+  width: 100%; /* Exactly 100% of the text length */
+  height: 3px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: bottom center;
+  transition: transform 0.25s ease-out;
+}
+
+.navigationBar nav ul li a span:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom center;
+}
+
+.main {
+	margin: auto;
+	width: 80%;
+	padding-top: 100px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 100px;
+  /* color: #993c47; */
+  color: #000000;
+  filter: drop-shadow(-5px 9px 4px rgba(0, 0, 0, 0.25));
+  user-select: none;
 }
 
 p {
-	margin-top: 5px;
-}
-.title {
-	text-align: left;
-}
-.main {
-	/* You can set the margin property to auto to horizontally center the element within its container.
-	The element will then take up the specified width,
-	and the remaining space will be split equally between the left and right margins: */
-	margin: auto;
-	width:80%;
-	padding-top: 70px;
-	filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.2));
-	
-}
-.copyright {
-	
-	font-size: small;
-	margin-top: 10pt;
-	text-align: center;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 28px;
+  filter: drop-shadow(-5px 9px 4px rgba(0, 0, 0, 0.2));
 }
 
+.subtitle {
+  font-size: 18px;
+}
+
+.side-image{
+  position: fixed;
+  left: 20px;
+  top: 650px;
+  width: 120px;
+  height: auto;
+  cursor: url('./images/openHand.png') 3 3, pointer;
+  mix-blend-mode: multiply;
+}
+.side-image-text{
+  position: fixed;
+  left: 35px;
+  top: 600px;
+  width: 120px;
+  height: auto;
+  cursor: url('./images/openHand.png') 3 3, pointer;
+  mix-blend-mode: multiply;
+}
+
+.bottom-text {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0.6;
+  text-align: center;
+  padding: 10px 0;
+  z-index: 100;
+  user-select: none;
+  pointer-events: none;
+}
+
+
+/*KEYFRAME ANIMATIONS*/
+
+/*Navigation bar animation*/
+@keyframes jump {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+/*Background texture animation*/
 @keyframes grainShift {
     0% { transform: translate(0, 0); }
     25% { transform: translate(-10px, 15px); }
