@@ -63,7 +63,6 @@ body::before {
 
   z-index: 10;
   box-sizing: border-box;
-  filter: drop-shadow(0px 3px 4px rgba(0, 0, 0, 0.15));
   animation: jump 1.5s steps(1) infinite;
 }
 
@@ -85,7 +84,6 @@ margin-top
   color: #222222;
   text-decoration: none;
   font-weight: normal;
-  
   pointer-events: none; /*I only want my hyperlinks to be clickable directly on the text, not the whole <a> box*/
 }
 
@@ -129,14 +127,14 @@ h1 {
   color: #000000;
   filter: drop-shadow(-5px 9px 4px rgba(0, 0, 0, 0.25));
   user-select: none;
+  
 }
 
 p {
-  font-family: sans-serif;
-  font-weight: bold;
+  font-family: system-ui;
+  font-weight: 450;
   text-align: center;
-  font-size: 28px;
-  filter: drop-shadow(-5px 9px 4px rgba(0, 0, 0, 0.2));
+  font-size: 14px;
 }
 
 .subtitle {
@@ -145,20 +143,21 @@ p {
 
 .side-image {
   position: fixed;
-  left: 20px;
-  bottom: 20px; 
-  width: 120px;
+  left: 10px;
+  bottom: 45px; 
+  width: 60px;
   height: auto;
   max-height: 25vh;
   object-fit: contain;
   cursor: url('./images/openHand.png') 3 3, pointer;
   mix-blend-mode: multiply;
 }
+
 .side-image-text {
   position: fixed;
-  left: 35px;
-  bottom: 160px;
-  width: 120px;
+  left: 25px;
+  bottom: 120px;
+  width: 60px;
   height: auto;
   cursor: url('./images/openHand.png') 3 3, pointer;
   mix-blend-mode: multiply;
@@ -175,6 +174,7 @@ p {
   z-index: 100;
   user-select: none;
   pointer-events: none;
+  background-color: rgba(255, 255, 255, 1); /* Optional: adds a semi-transparent background for better readability */
 }
 
 
